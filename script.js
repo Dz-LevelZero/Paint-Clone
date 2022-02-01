@@ -12,6 +12,8 @@ const clearStorageBtn = document.getElementById('clear-storage');
 const downloadBtn = document.getElementById('download');
 const { body } = document;
 
+const BRUSH_TIMEOUT = 1500;
+
 // Global Variables
 const canvas = document.createElement('canvas');
 canvas.id = 'canvas';
@@ -74,6 +76,11 @@ const switchToBrush = () => {
   displayBrushSize();
 }
 
+// setTimeout function 
+const brushTimeSetTimeout = (ms) => {
+  setTimeout(switchToBrush, ms);
+}
+
 // Create Canvas
 const createCanvas = () => {
   canvas.width = window.innerWidth;
@@ -90,7 +97,7 @@ clearCanvasBtn.addEventListener('click', () => {
   drawnArray = [];
   // Active Tool
   activeToolEl.textContent = 'Canvas Cleared';
-  setTimeout(switchToBrush, 1500);
+  brushTimeSetTimeout(BRUSH_TIMEOUT);
 });
 
 // Draw what is stored in DrawnArray
@@ -119,7 +126,6 @@ const storeDrawn = (x, y, size, color, erase) => {
     color,
     erase,
   };
-  console.log(line);
   drawnArray.push(line);
 }
 
@@ -171,7 +177,7 @@ saveStorageBtn.addEventListener('click', () => {
   localStorage.setItem("savedCanvas", JSON.stringify(drawnArray))
   // Active Tool
   activeToolEl.textContent = 'Canvas Saved';
-  setTimeout(switchToBrush, 1500);
+  brushTimeSetTimeout(BRUSH_TIMEOUT);
 });
 
 // Load from Local Storage
@@ -181,7 +187,7 @@ loadStorageBtn.addEventListener('click', () => {
     restoreCanvas();
   // Active Tool
     activeToolEl.textContent = 'Canvas Loaded';
-    setTimeout(switchToBrush, 1500);
+    brushTimeSetTimeout(BRUSH_TIMEOUT);
   } else {
     activeToolEl.textContent = 'No Canvas to Load';
   }
@@ -192,7 +198,7 @@ clearStorageBtn.addEventListener('click', () => {
   localStorage.removeItem("savedCanvas");
   // Active Tool
   activeToolEl.textContent = 'Local Storage Cleared';
-  setTimeout(switchToBrush, 1500);
+  brushTimeSetTimeout(BRUSH_TIMEOUT);
 });
 
 // Download Image
@@ -201,7 +207,7 @@ downloadBtn.addEventListener('click', () => {
   downloadBtn.download = "paint-example.jpeg";
   // Active Tool
   activeToolEl.textContent = 'Image File Saved';
-  setTimeout(switchToBrush, 1500);
+  brushTimeSetTimeout(BRUSH_TIMEOUT);
 });
 
 // Event Listener
